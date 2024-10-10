@@ -52,18 +52,6 @@ body {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
   }
   
-  .app-icon {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 15px;
-    transition: transform 0.3s;
-  }
-  
-  .app-card:hover .app-icon {
-    transform: scale(1.1);
-  }
-  
   .app-card h2 {
     margin: 10px 0;
     font-size: 1.5em;

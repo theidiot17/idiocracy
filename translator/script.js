@@ -46,7 +46,7 @@ const charToEmoji = {
     '"': '“',
     '-': '➖',
     '_': '⬜',
-    // Existing mappings kept and new ones added
+    // Add more mappings as desired
   };
   
   // Create reverse mapping
@@ -57,11 +57,10 @@ const charToEmoji = {
     emojiToChar[value] = key;
   }
   
-  // Function to determine if a character is an emoji
-  function isEmoji(char) {
-    // Simple regex to match most emojis
-    const emojiRegex = /\p{Emoji}/u;
-    return emojiRegex.test(char);
+  // Function to determine if a substring is an emoji
+  function isEmoji(str) {
+    // Basic check: if the substring is a key in emojiToChar
+    return emojiToChar.hasOwnProperty(str);
   }
   
   // Function to translate text to emojis
@@ -73,17 +72,15 @@ const charToEmoji = {
   function translateToText(emojiStr) {
     let text = '';
     let i = 0;
+    const maxEmojiLength = Math.max(...Object.values(charToEmoji).map(e => e.length));
   
     while (i < emojiStr.length) {
-      // Attempt to match multi-character emojis first
       let matched = false;
   
-      // Define the maximum length of emojis in charToEmoji
-      const maxEmojiLength = Math.max(...Object.values(charToEmoji).map(e => e.length));
-  
+      // Attempt to match multi-character emojis first
       for (let len = maxEmojiLength; len > 0; len--) {
         const substr = emojiStr.substring(i, i + len);
-        if (emojiToChar[substr]) {
+        if (isEmoji(substr)) {
           text += emojiToChar[substr];
           i += len;
           matched = true;
@@ -105,33 +102,32 @@ const charToEmoji = {
   function handleLiveTranslation() {
     const input = document.getElementById('inputBox').value;
     let output = '';
+    let i = 0;
   
-    // Iterate through each character or emoji in the input
-    for (let i = 0; i < input.length;) {
+    while (i < input.length) {
       let matched = false;
-      // Attempt to match multi-character emojis
-      const maxEmojiLength = Math.max(...Object.values(charToEmoji).map(e => e.length));
+      const remaining = input.length - i;
+      const maxLen = Math.min(4, remaining); // Emojis can be up to 4 characters
   
-      for (let len = maxEmojiLength; len > 0; len--) {
+      for (let len = maxLen; len > 0; len--) {
         const substr = input.substring(i, i + len);
-        if (emojiToChar[substr]) {
-          output += emojiToChar[substr];
+        if (isEmoji(substr)) {
+          output += translateToText(substr);
           i += len;
-          matched = true;
-          break;
-        } else if (charToEmoji[substr.toUpperCase()] || charToEmoji[substr.toLowerCase()]) {
-          const char = substr.toUpperCase() in charToEmoji ? substr.toUpperCase() : substr.toLowerCase();
-          output += charToEmoji[char] || char;
-          i += 1;
           matched = true;
           break;
         }
       }
   
       if (!matched) {
-        // If no match, append the original character
-        output += input[i];
-        i++;
+        const char = input[i];
+        // Check if the character is an English letter or mapped symbol
+        if (charToEmoji[char] || charToEmoji[char.toUpperCase()]) {
+          output += translateToEmoji(char);
+        } else {
+          output += char;
+        }
+        i += 1;
       }
     }
   
