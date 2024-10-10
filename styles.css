@@ -1,0 +1,75 @@
+/* styles.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .hub-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin-bottom: 30px;
+    font-size: 1.1em;
+  }
+  
+  /* App Launcher Styles */
+  .app-launcher {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .app-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .app-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+  }
+  
+  .app-card h2 {
+    margin: 10px 0;
+  }
+  
+  .app-card p {
+    font-size: 0.95em;
+    color: #666;
+    min-height: 60px;
+  }
+  
+  .launch-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .launch-button:hover {
+    background-color: #45a049;
+  }
+  
